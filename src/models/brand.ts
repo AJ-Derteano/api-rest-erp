@@ -1,10 +1,11 @@
 import { Knex } from "knex";
 
 const createTableBrand = async (db: Knex) => {
-  let exists = await db.schema.hasTable("brand");
+  const tableName = "brand";
+  const exists = await db.schema.hasTable(tableName);
 
   if (!exists) {
-    await db.schema.createTable("brand", (table) => {
+    await db.schema.createTable(tableName, (table) => {
       table.increments("idbrand").primary();
       table.string("brand").notNullable().unique();
       table.string("status").notNullable().defaultTo("1");

@@ -1,13 +1,15 @@
 import { Knex } from "knex";
 
-const createTableCategory = async (db: Knex) => {
-  const tableName = "category";
-  const exists = await db.schema.hasTable(tableName);
+const createTableUnit = async (db: Knex) => {
+  const tableName = "unit";
+  let exists = await db.schema.hasTable(tableName);
 
   if (!exists) {
     await db.schema.createTable(tableName, (table) => {
-      table.increments("idcategory").primary();
-      table.string("category").notNullable().unique();
+      table.increments("idunit").primary();
+      table.string("unit_code").notNullable().unique();
+      table.string("unit_name").notNullable().unique();
+      table.string("description").nullable();
       table.string("status").notNullable().defaultTo("1");
       table
         .datetime("date_created", { useTz: true })
@@ -27,4 +29,4 @@ const createTableCategory = async (db: Knex) => {
   }
 };
 
-export { createTableCategory };
+export { createTableUnit };

@@ -3,6 +3,7 @@ import Table from "cli-table";
 
 import { createTableBrand } from "../models/brand";
 import { createTableCategory } from "../models/category";
+import { createTableUnit } from "../models/unit";
 
 export const loadTables = async () => {
   const shellTable = new Table({
@@ -27,10 +28,11 @@ export const loadTables = async () => {
     },
   });
 
-  let category = await createTableCategory(db);
-  let brand = await createTableBrand(db);
+  const category = await createTableCategory(db);
+  const brand = await createTableBrand(db);
+  const unit = await createTableUnit(db);
 
-  shellTable.push(["category", category], ["brand", brand]);
+  shellTable.push(["category", category], ["brand", brand], ["unit", unit]);
 
   console.log(shellTable.toString(), "\n");
 };
