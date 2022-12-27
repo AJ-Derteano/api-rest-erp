@@ -4,6 +4,7 @@ import Table from "cli-table";
 import { createTableBrand } from "../models/brand";
 import { createTableCategory } from "../models/category";
 import { createTableUnit } from "../models/unit";
+import { createTableUnitEquivalence } from "../models/UnitEquivalence";
 
 export const loadTables = async () => {
   const shellTable = new Table({
@@ -31,8 +32,14 @@ export const loadTables = async () => {
   const category = await createTableCategory(db);
   const brand = await createTableBrand(db);
   const unit = await createTableUnit(db);
+  const unitEquivalence = await createTableUnitEquivalence(db);
 
-  shellTable.push(["category", category], ["brand", brand], ["unit", unit]);
+  shellTable.push(
+    ["category", category],
+    ["brand", brand],
+    ["unit", unit],
+    ["unit_equivalence", unitEquivalence]
+  );
 
   console.log(shellTable.toString(), "\n");
 };
