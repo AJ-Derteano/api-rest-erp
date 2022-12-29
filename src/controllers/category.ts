@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ServiceCategory } from "../services/category";
+import { ServiceCategory } from "../services/Category";
 import { handleHttpError } from "../utils/handleHttpError";
 import { handleHttpResponse } from "../utils/handleHttpResponse";
 

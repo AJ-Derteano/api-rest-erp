@@ -1,15 +1,14 @@
 import { Request, Response } from "express";
-import { ServiceBrand } from "../services/Brand";
+import { ServiceProduct } from "../services/Product";
 import { handleHttpError } from "../utils/handleHttpError";
 import { handleHttpResponse } from "../utils/handleHttpResponse";
 
-const ControllerBrand = {
+const ControllerProduct = {
   get: async (_req: Request, res: Response) => {
     try {
-      const response = await ServiceBrand.find();
-      const data = response ? response : "NOT_FOUND";
+      const response = await ServiceProduct.find();
 
-      handleHttpResponse(res, data);
+      handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_GET`, 500, err);
     }
@@ -18,27 +17,27 @@ const ControllerBrand = {
     const { id } = params;
 
     try {
-      const response = await ServiceBrand.findOneById(id);
-      const data = response ? response : "NOT_FOUND";
+      const response = await ServiceProduct.findOneById(id);
 
-      handleHttpResponse(res, data);
+      handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_GET_BY_ID [${id}]`, 500, err);
     }
   },
   searchBy: async ({ body }: Request, res: Response) => {
+    const { field, value } = body;
     try {
-      const response = await ServiceBrand.findBy(body);
-      const data = response ? response : "NOT_FOUND";
+      const response = await ServiceProduct.findBy(field, value);
 
-      handleHttpResponse(res, data);
+      handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_SEARCH_BY [${body}]`, 500, err);
     }
   },
   create: async ({ body }: Request, res: Response) => {
     try {
-      const response = await ServiceBrand.create(body);
+      const response = await ServiceProduct.create(body);
+
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_CREATE`, 500, err);
@@ -46,7 +45,8 @@ const ControllerBrand = {
   },
   update: async ({ params, body }: Request, res: Response) => {
     try {
-      const response = await ServiceBrand.update(params.id, body);
+      const response = await ServiceProduct.update(params.id, body);
+
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_UPDATE [${params.id}]`, 500, err);
@@ -54,7 +54,8 @@ const ControllerBrand = {
   },
   delete: async ({ params }: Request, res: Response) => {
     try {
-      const response = await ServiceBrand.softDelete(params.id);
+      const response = await ServiceProduct.softDelete(params.id);
+
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_DELETE [${params.id}]`, 500, err);
@@ -62,4 +63,4 @@ const ControllerBrand = {
   },
 };
 
-export { ControllerBrand };
+export { ControllerProduct };

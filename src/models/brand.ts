@@ -6,9 +6,13 @@ const createTableBrand = async (db: Knex) => {
 
   if (!exists) {
     await db.schema.createTable(tableName, (table) => {
+      table.charset(process.env.DB_CHARSET || "");
+      table.collate(process.env.DB_COLLATION || "");
+
       table.increments("idbrand").primary();
-      table.string("brand").notNullable().unique();
-      table.string("status").notNullable().defaultTo("1");
+      table.string("brand", 50).notNullable().unique();
+      table.string("status", 1).notNullable().defaultTo("1");
+
       table
         .datetime("date_created", { useTz: true })
         .notNullable()

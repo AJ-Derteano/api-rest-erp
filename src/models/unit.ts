@@ -6,11 +6,15 @@ const createTableUnit = async (db: Knex) => {
 
   if (!exists) {
     await db.schema.createTable(tableName, (table) => {
+      table.charset(process.env.DB_CHARSET || "");
+      table.collate(process.env.DB_COLLATION || "");
+
       table.increments("idunit").primary();
-      table.string("unit_code").notNullable().unique();
-      table.string("unit_name").notNullable().unique();
+      table.string("unit_code", 5).notNullable().unique();
+      table.string("unit_name", 50).notNullable().unique();
       table.string("description").nullable();
-      table.string("status").notNullable().defaultTo("1");
+      table.string("status", 1).notNullable().defaultTo("1");
+
       table
         .datetime("date_created", { useTz: true })
         .notNullable()

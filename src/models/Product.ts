@@ -1,7 +1,8 @@
 import { Knex } from "knex";
 
-const createTableCategory = async (db: Knex) => {
-  const tableName = "category";
+const createTableProduct = async (db: Knex) => {
+  const tableName = "product";
+
   const exists = await db.schema.hasTable(tableName);
 
   if (!exists) {
@@ -9,8 +10,12 @@ const createTableCategory = async (db: Knex) => {
       table.charset(process.env.DB_CHARSET || "");
       table.collate(process.env.DB_COLLATION || "");
 
-      table.increments("idcategory").primary();
-      table.string("category", 50).notNullable().unique();
+      table.increments("idproduct").primary();
+      table.string("product_name", 50).notNullable().unique();
+      table.string("unit_code", 5).nullable();
+      table.integer("idcategory").notNullable();
+      table.integer("idbrand").notNullable();
+      table.string("details").nullable();
       table.string("status", 1).notNullable().defaultTo("1");
 
       table
@@ -31,4 +36,4 @@ const createTableCategory = async (db: Knex) => {
   }
 };
 
-export { createTableCategory };
+export { createTableProduct };

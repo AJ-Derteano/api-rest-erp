@@ -1,10 +1,11 @@
 import { db } from "../config/db";
 import Table from "cli-table";
 
-import { createTableBrand } from "../models/brand";
-import { createTableCategory } from "../models/category";
-import { createTableUnit } from "../models/unit";
+import { createTableBrand } from "../models/Brand";
+import { createTableCategory } from "../models/Category";
+import { createTableUnit } from "../models/Unit";
 import { createTableUnitEquivalence } from "../models/UnitEquivalence";
+import { createTableProduct } from "../models/Product";
 
 export const loadTables = async () => {
   const shellTable = new Table({
@@ -33,12 +34,14 @@ export const loadTables = async () => {
   const brand = await createTableBrand(db);
   const unit = await createTableUnit(db);
   const unitEquivalence = await createTableUnitEquivalence(db);
+  const product = await createTableProduct(db);
 
   shellTable.push(
     ["category", category],
     ["brand", brand],
     ["unit", unit],
-    ["unit_equivalence", unitEquivalence]
+    ["unit_equivalence", unitEquivalence],
+    ["product", product]
   );
 
   console.log(shellTable.toString(), "\n");

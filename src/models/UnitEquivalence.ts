@@ -6,14 +6,18 @@ const createTableUnitEquivalence = async (db: Knex) => {
 
   if (!exists) {
     await db.schema.createTable(tableName, (table) => {
+      table.charset(process.env.DB_CHARSET || "");
+      table.collate(process.env.DB_COLLATION || "");
+
       table.increments("idunit_equivalence").primary();
-      table.string("base_unit").notNullable();
-      table.string("des_unit").notNullable();
+      table.string("base_unit", 5).notNullable();
+      table.string("des_unit", 5).notNullable();
       table.smallint("multiple_quantity").notNullable();
       table.string("description").nullable();
       table.datetime("start_validity").nullable().defaultTo(db.fn.now());
       table.datetime("end_validity").nullable();
-      table.string("status").notNullable().defaultTo("1");
+      table.string("status",1).notNullable().defaultTo("1");
+
       table
         .datetime("date_created", { useTz: true })
         .notNullable()
@@ -27,8 +31,6 @@ const createTableUnitEquivalence = async (db: Knex) => {
         .defaultTo(db.fn.now());
         
       table.string("user_updated").notNullable();
-
-      table.unique(["base_unit", "des_unit"]);
 
       table.foreign("base_unit").references("unit.unit_code");
       table.foreign("des_unit").references("unit.unit_code");

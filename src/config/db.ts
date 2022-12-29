@@ -6,8 +6,8 @@ const DB_PORT: number = parseInt(process.env.DB_PORT || "3306");
 const DB_USER = process.env.DB_USER;
 const DB_PASS = process.env.DB_PASS;
 const DB_NAME = process.env.DB_NAME;
-// const DB_CHARSET = process.env.DB_CHARSET;
-// const DB_TZ = process.env.DB_TZ;
+const DB_CHARSET = process.env.DB_CHARSET;
+const DB_TZ = process.env.DB_TZ;
 
 const db = knex({
   client: "mysql2",
@@ -17,8 +17,8 @@ const db = knex({
     user: DB_USER,
     password: DB_PASS,
     database: DB_NAME,
-    // charset: DB_CHARSET,
-    // timezone: DB_TZ,
+    charset: DB_CHARSET,
+    timezone: DB_TZ,
   },
   pool: {
     /* afterCreate: function (connection: any, callback: Function) {
