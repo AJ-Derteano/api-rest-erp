@@ -1,9 +1,9 @@
 import { db } from "../config/db";
-import { Category } from "../interfaces/category";
+import { Category } from "../interfaces/Category";
 
 const tableName = "category";
 
-const ServiceCategory = {
+const CategoryService = {
   find: async () => {
     const categories = await db(tableName).select().where({ status: "1" });
 
@@ -57,4 +57,4 @@ const ServiceCategory = {
   },
 };
 
-export { ServiceCategory };
+export { CategoryService };

@@ -1,20 +1,20 @@
 import { Router } from "express";
-import { ControllerUnitEquivalence } from "../controllers/UnitEquivalence";
+import { UnitEquivalenceController } from "../controllers/UnitEquivalence";
 
 const router = Router();
 
-router.get("/", ControllerUnitEquivalence.get);
+router.get("/", UnitEquivalenceController.get);
 
-router.get("/search", ControllerUnitEquivalence.searchBy);
+router.get("/search", UnitEquivalenceController.searchBy);
 
-router.get("/conversion", ControllerUnitEquivalence.getConversion);
+router.get("/conversion", UnitEquivalenceController.getConversion);
 
-router.get("/:id", ControllerUnitEquivalence.getById);
+router.get("/:id", UnitEquivalenceController.getById);
 
-router.post("/", ControllerUnitEquivalence.create);
+router.post("/", UnitEquivalenceController.create);
 
-router.put("/:id", ControllerUnitEquivalence.update);
+router.put("/:id", UnitEquivalenceController.update);
 
-router.delete("/:id", ControllerUnitEquivalence.delete);
+router.delete("/:id", UnitEquivalenceController.delete);
 
 export { router };

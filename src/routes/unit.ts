@@ -1,18 +1,18 @@
 import { Router } from "express";
-import { ControllerUnit } from "../controllers/Unit";
+import { UnitController } from "../controllers/Unit";
 
 const router = Router();
 
-router.get("/", ControllerUnit.get);
+router.get("/", UnitController.get);
 
-router.get("/search", ControllerUnit.searchBy);
+router.get("/search", UnitController.searchBy);
 
-router.get("/:id", ControllerUnit.getById);
+router.get("/:id", UnitController.getById);
 
-router.post("/", ControllerUnit.create);
+router.post("/", UnitController.create);
 
-router.put("/:id", ControllerUnit.update);
+router.put("/:id", UnitController.update);
 
-router.delete("/:id", ControllerUnit.delete);
+router.delete("/:id", UnitController.delete);
 
 export { router };

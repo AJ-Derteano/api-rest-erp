@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { ServiceUnit } from "../services/Unit";
+import { UnitService } from "../services/Unit";
 import { handleHttpError } from "../utils/handleHttpError";
 import { handleHttpResponse } from "../utils/handleHttpResponse";
 
-const ControllerUnit = {
+const UnitController = {
   get: async (_req: Request, res: Response) => {
     try {
-      const response = await ServiceUnit.find();
+      const response = await UnitService.find();
       const data = response ? response : "NOT_FOUND";
 
       handleHttpResponse(res, data);
@@ -18,7 +18,7 @@ const ControllerUnit = {
     const { id } = params;
 
     try {
-      const response = await ServiceUnit.findOneById(id);
+      const response = await UnitService.findOneById(id);
       const data = response ? response : "NOT_FOUND";
 
       handleHttpResponse(res, data);
@@ -28,7 +28,7 @@ const ControllerUnit = {
   },
   searchBy: async ({ body }: Request, res: Response) => {
     try {
-      const response = await ServiceUnit.findBy(body);
+      const response = await UnitService.findBy(body);
       const data = response ? response : "NOT_FOUND";
 
       handleHttpResponse(res, data);
@@ -38,7 +38,7 @@ const ControllerUnit = {
   },
   create: async ({ body }: Request, res: Response) => {
     try {
-      const response = await ServiceUnit.create(body);
+      const response = await UnitService.create(body);
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_CREATE`, 500, err);
@@ -46,7 +46,7 @@ const ControllerUnit = {
   },
   update: async ({ params, body }: Request, res: Response) => {
     try {
-      const response = await ServiceUnit.update(params.id, body);
+      const response = await UnitService.update(params.id, body);
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_UPDATE [${params.id}]`, 500, err);
@@ -54,7 +54,7 @@ const ControllerUnit = {
   },
   delete: async ({ params }: Request, res: Response) => {
     try {
-      const response = await ServiceUnit.softDelete(params.id);
+      const response = await UnitService.softDelete(params.id);
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_DELETE [${params.id}]`, 500, err);
@@ -62,4 +62,4 @@ const ControllerUnit = {
   },
 };
 
-export { ControllerUnit };
+export { UnitController };

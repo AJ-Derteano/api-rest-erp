@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { ServiceBrand } from "../services/Brand";
+import { BrandService } from "../services/Brand";
 import { handleHttpError } from "../utils/handleHttpError";
 import { handleHttpResponse } from "../utils/handleHttpResponse";
 
-const ControllerBrand = {
+const BrandController = {
   get: async (_req: Request, res: Response) => {
     try {
-      const response = await ServiceBrand.find();
+      const response = await BrandService.find();
       const data = response ? response : "NOT_FOUND";
 
       handleHttpResponse(res, data);
@@ -18,7 +18,7 @@ const ControllerBrand = {
     const { id } = params;
 
     try {
-      const response = await ServiceBrand.findOneById(id);
+      const response = await BrandService.findOneById(id);
       const data = response ? response : "NOT_FOUND";
 
       handleHttpResponse(res, data);
@@ -28,7 +28,7 @@ const ControllerBrand = {
   },
   searchBy: async ({ body }: Request, res: Response) => {
     try {
-      const response = await ServiceBrand.findBy(body);
+      const response = await BrandService.findBy(body);
       const data = response ? response : "NOT_FOUND";
 
       handleHttpResponse(res, data);
@@ -38,7 +38,7 @@ const ControllerBrand = {
   },
   create: async ({ body }: Request, res: Response) => {
     try {
-      const response = await ServiceBrand.create(body);
+      const response = await BrandService.create(body);
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_CREATE`, 500, err);
@@ -46,7 +46,7 @@ const ControllerBrand = {
   },
   update: async ({ params, body }: Request, res: Response) => {
     try {
-      const response = await ServiceBrand.update(params.id, body);
+      const response = await BrandService.update(params.id, body);
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_UPDATE [${params.id}]`, 500, err);
@@ -54,7 +54,7 @@ const ControllerBrand = {
   },
   delete: async ({ params }: Request, res: Response) => {
     try {
-      const response = await ServiceBrand.softDelete(params.id);
+      const response = await BrandService.softDelete(params.id);
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_DELETE [${params.id}]`, 500, err);
@@ -62,4 +62,4 @@ const ControllerBrand = {
   },
 };
 
-export { ControllerBrand };
+export { BrandController };

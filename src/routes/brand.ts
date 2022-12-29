@@ -1,18 +1,18 @@
 import { Router } from "express";
-import { ControllerBrand } from "../controllers/Brand";
+import { BrandController } from "../controllers/Brand";
 
 const router = Router();
 
-router.get("/", ControllerBrand.get);
+router.get("/", BrandController.get);
 
-router.get("/search", ControllerBrand.searchBy);
+router.get("/search", BrandController.searchBy);
 
-router.get("/:id", ControllerBrand.getById);
+router.get("/:id", BrandController.getById);
 
-router.post("/", ControllerBrand.create);
+router.post("/", BrandController.create);
 
-router.put("/:id", ControllerBrand.update);
+router.put("/:id", BrandController.update);
 
-router.delete("/:id", ControllerBrand.delete);
+router.delete("/:id", BrandController.delete);
 
 export { router };

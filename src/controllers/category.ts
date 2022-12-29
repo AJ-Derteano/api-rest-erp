@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { ServiceCategory } from "../services/Category";
+import { CategoryService } from "../services/Category";
 import { handleHttpError } from "../utils/handleHttpError";
 import { handleHttpResponse } from "../utils/handleHttpResponse";
 
-const ControllerCategory = {
+const CategoryController = {
   get: async (_req: Request, res: Response) => {
     try {
-      const response = await ServiceCategory.find();
+      const response = await CategoryService.find();
       const data = response ? response : "NOT_FOUND";
 
       handleHttpResponse(res, data);
@@ -18,7 +18,7 @@ const ControllerCategory = {
     const { id } = params;
 
     try {
-      const response = await ServiceCategory.findOneById(id);
+      const response = await CategoryService.findOneById(id);
       const data = response ? response : "NOT_FOUND";
 
       handleHttpResponse(res, data);
@@ -28,7 +28,7 @@ const ControllerCategory = {
   },
   searchBy: async ({ body }: Request, res: Response) => {
     try {
-      const response = await ServiceCategory.findBy(body);
+      const response = await CategoryService.findBy(body);
       const data = response ? response : "NOT_FOUND";
 
       handleHttpResponse(res, data);
@@ -38,7 +38,7 @@ const ControllerCategory = {
   },
   create: async ({ body }: Request, res: Response) => {
     try {
-      const response = await ServiceCategory.create(body);
+      const response = await CategoryService.create(body);
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_CREATE`, 500, err);
@@ -46,7 +46,7 @@ const ControllerCategory = {
   },
   update: async ({ params, body }: Request, res: Response) => {
     try {
-      const response = await ServiceCategory.update(params.id, body);
+      const response = await CategoryService.update(params.id, body);
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_UPDATE [${params.id}]`, 500, err);
@@ -54,7 +54,7 @@ const ControllerCategory = {
   },
   delete: async ({ params }: Request, res: Response) => {
     try {
-      const response = await ServiceCategory.softDelete(params.id);
+      const response = await CategoryService.softDelete(params.id);
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_DELETE [${params.id}]`, 500, err);
@@ -62,4 +62,4 @@ const ControllerCategory = {
   },
 };
 
-export { ControllerCategory };
+export { CategoryController };

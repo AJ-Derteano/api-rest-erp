@@ -1,9 +1,9 @@
 import { db } from "../config/db";
-import { Unit } from "../interfaces/unit";
+import { Unit } from "../interfaces/Unit";
 
 const tableName = "unit";
 
-const ServiceUnit = {
+const UnitService = {
   find: async () => {
     const brands = await db(tableName).select().where({ status: "1" });
 
@@ -57,4 +57,4 @@ const ServiceUnit = {
   },
 };
 
-export { ServiceUnit };
+export { UnitService };

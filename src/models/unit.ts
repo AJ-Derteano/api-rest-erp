@@ -1,6 +1,6 @@
 import { Knex } from "knex";
 
-const createTableUnit = async (db: Knex) => {
+const UnitModel = async (db: Knex) => {
   const tableName = "unit";
   const exists = await db.schema.hasTable(tableName);
 
@@ -33,4 +33,4 @@ const createTableUnit = async (db: Knex) => {
   }
 };
 
-export { createTableUnit };
+export { UnitModel };

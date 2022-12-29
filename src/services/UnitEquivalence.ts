@@ -3,7 +3,7 @@ import { UnitEquivalence } from "../interfaces/UnitEquivalence";
 
 const tableName = "unit_equivalence";
 
-const ServiceUnitEquivalence = {
+const UnitEquivalenceService = {
   find: async () => {
     const search = await db(tableName).select().where({ status: "1" });
 
@@ -113,4 +113,4 @@ const ServiceUnitEquivalence = {
   },
 };
 
-export { ServiceUnitEquivalence };
+export { UnitEquivalenceService };

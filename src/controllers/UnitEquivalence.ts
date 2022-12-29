@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { ServiceUnitEquivalence } from "../services/UnitEquivalence";
+import { UnitEquivalenceService } from "../services/UnitEquivalence";
 import { handleHttpError } from "../utils/handleHttpError";
 import { handleHttpResponse } from "../utils/handleHttpResponse";
 
-const ControllerUnitEquivalence = {
+const UnitEquivalenceController = {
   get: async (_req: Request, res: Response) => {
     try {
-      const response = await ServiceUnitEquivalence.find();
+      const response = await UnitEquivalenceService.find();
       const data = response ? response : "NOT_FOUND";
 
       handleHttpResponse(res, data);
@@ -18,7 +18,7 @@ const ControllerUnitEquivalence = {
     const { id } = params;
 
     try {
-      const response = await ServiceUnitEquivalence.findOneById(id);
+      const response = await UnitEquivalenceService.findOneById(id);
       const data = response ? response : "NOT_FOUND";
 
       handleHttpResponse(res, data);
@@ -28,7 +28,7 @@ const ControllerUnitEquivalence = {
   },
   searchBy: async ({ body }: Request, res: Response) => {
     try {
-      const response = await ServiceUnitEquivalence.findBy(body);
+      const response = await UnitEquivalenceService.findBy(body);
       const data = response ? response : "NOT_FOUND";
 
       handleHttpResponse(res, data);
@@ -38,7 +38,7 @@ const ControllerUnitEquivalence = {
   },
   create: async ({ body }: Request, res: Response) => {
     try {
-      const response = await ServiceUnitEquivalence.create(body);
+      const response = await UnitEquivalenceService.create(body);
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_CREATE`, 500, err);
@@ -46,7 +46,7 @@ const ControllerUnitEquivalence = {
   },
   update: async ({ params, body }: Request, res: Response) => {
     try {
-      const response = await ServiceUnitEquivalence.update(params.id, body);
+      const response = await UnitEquivalenceService.update(params.id, body);
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_UPDATE [${params.id}]`, 500, err);
@@ -54,7 +54,7 @@ const ControllerUnitEquivalence = {
   },
   delete: async ({ params }: Request, res: Response) => {
     try {
-      const response = await ServiceUnitEquivalence.softDelete(params.id);
+      const response = await UnitEquivalenceService.softDelete(params.id);
       handleHttpResponse(res, response);
     } catch (err) {
       handleHttpError(res, `ERROR_DELETE [${params.id}]`, 500, err);
@@ -63,11 +63,11 @@ const ControllerUnitEquivalence = {
   getConversion: async ({ body }: Request, res: Response) => {
     const { quantity, base_unit, des_unit } = body;
     try {
-      const response = await ServiceUnitEquivalence.getConversion(quantity, {
+      const response = await UnitEquivalenceService.getConversion(quantity, {
         base_unit,
         des_unit,
       });
-      
+
       const conversion = response;
 
       handleHttpResponse(res, conversion);
@@ -77,4 +77,4 @@ const ControllerUnitEquivalence = {
   },
 };
 
-export { ControllerUnitEquivalence };
+export { UnitEquivalenceController };

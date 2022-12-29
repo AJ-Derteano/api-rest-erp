@@ -1,6 +1,6 @@
 import { Knex } from "knex";
 
-const createTableUnitEquivalence = async (db: Knex) => {
+const UnitEquivalenceModel = async (db: Knex) => {
   const tableName = "unit_equivalence";
   const exists = await db.schema.hasTable(tableName);
 
@@ -16,7 +16,7 @@ const createTableUnitEquivalence = async (db: Knex) => {
       table.string("description").nullable();
       table.datetime("start_validity").nullable().defaultTo(db.fn.now());
       table.datetime("end_validity").nullable();
-      table.string("status",1).notNullable().defaultTo("1");
+      table.string("status", 1).notNullable().defaultTo("1");
 
       table
         .datetime("date_created", { useTz: true })
@@ -29,7 +29,7 @@ const createTableUnitEquivalence = async (db: Knex) => {
         .datetime("date_updated", { useTz: true })
         .notNullable()
         .defaultTo(db.fn.now());
-        
+
       table.string("user_updated").notNullable();
 
       table.foreign("base_unit").references("unit.unit_code");
@@ -42,4 +42,4 @@ const createTableUnitEquivalence = async (db: Knex) => {
   }
 };
 
-export { createTableUnitEquivalence };
+export { UnitEquivalenceModel };

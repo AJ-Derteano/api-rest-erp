@@ -3,7 +3,7 @@ import { Product } from "../interfaces/Product";
 
 const tableName = "product";
 
-const ServiceProduct = {
+const ProductService = {
   find: async () => {
     const result = await db(tableName)
       .select("product.*", "brand.brand", "category.category")
@@ -89,4 +89,4 @@ const ServiceProduct = {
   },
 };
 
-export { ServiceProduct };
+export { ProductService };

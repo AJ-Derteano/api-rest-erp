@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { ServiceProduct } from "../services/Product";
+import { ProductService } from "../services/Product";
 import { handleHttpError } from "../utils/handleHttpError";
 import { handleHttpResponse } from "../utils/handleHttpResponse";
 
-const ControllerProduct = {
+const ProductController = {
   get: async (_req: Request, res: Response) => {
     try {
-      const response = await ServiceProduct.find();
+      const response = await ProductService.find();
 
       handleHttpResponse(res, response);
     } catch (err) {
@@ -17,7 +17,7 @@ const ControllerProduct = {
     const { id } = params;
 
     try {
-      const response = await ServiceProduct.findOneById(id);
+      const response = await ProductService.findOneById(id);
 
       handleHttpResponse(res, response);
     } catch (err) {
@@ -27,7 +27,7 @@ const ControllerProduct = {
   searchBy: async ({ body }: Request, res: Response) => {
     const { field, value } = body;
     try {
-      const response = await ServiceProduct.findBy(field, value);
+      const response = await ProductService.findBy(field, value);
 
       handleHttpResponse(res, response);
     } catch (err) {
@@ -36,7 +36,7 @@ const ControllerProduct = {
   },
   create: async ({ body }: Request, res: Response) => {
     try {
-      const response = await ServiceProduct.create(body);
+      const response = await ProductService.create(body);
 
       handleHttpResponse(res, response);
     } catch (err) {
@@ -45,7 +45,7 @@ const ControllerProduct = {
   },
   update: async ({ params, body }: Request, res: Response) => {
     try {
-      const response = await ServiceProduct.update(params.id, body);
+      const response = await ProductService.update(params.id, body);
 
       handleHttpResponse(res, response);
     } catch (err) {
@@ -54,7 +54,7 @@ const ControllerProduct = {
   },
   delete: async ({ params }: Request, res: Response) => {
     try {
-      const response = await ServiceProduct.softDelete(params.id);
+      const response = await ProductService.softDelete(params.id);
 
       handleHttpResponse(res, response);
     } catch (err) {
@@ -63,4 +63,4 @@ const ControllerProduct = {
   },
 };
 
-export { ControllerProduct };
+export { ProductController };

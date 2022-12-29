@@ -1,6 +1,6 @@
 import { Knex } from "knex";
 
-const createTableCategory = async (db: Knex) => {
+const CategoryModel = async (db: Knex) => {
   const tableName = "category";
   const exists = await db.schema.hasTable(tableName);
 
@@ -31,4 +31,4 @@ const createTableCategory = async (db: Knex) => {
   }
 };
 
-export { createTableCategory };
+export { CategoryModel };
