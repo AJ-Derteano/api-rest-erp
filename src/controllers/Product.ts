@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ProductService } from "../services/Product";
+import { StorageService } from "../services/Storage";
 import { handleHttpError } from "../utils/handleHttpError";
 import { handleHttpResponse } from "../utils/handleHttpResponse";
 
@@ -34,9 +35,22 @@ const ProductController = {
       handleHttpError(res, `ERROR_SEARCH_BY [${body}]`, 500, err);
     }
   },
-  create: async ({ body }: Request, res: Response) => {
+  create: async ({ body, files }: Request, res: Response) => {
     try {
       const response = await ProductService.create(body);
+
+      if (files) {
+        (files as any[]).forEach(async (file) => {
+          await StorageService.create({
+            idorigin: response,
+            origin: "product",
+            filename: file.filename,
+            path: file.path,
+            user_created: body.user_created,
+            user_updated: body.user_updated,
+          });
+        });
+      }
 
       handleHttpResponse(res, response);
     } catch (err) {

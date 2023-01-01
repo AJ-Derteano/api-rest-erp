@@ -6,6 +6,7 @@ import { CategoryModel } from "../models/Category";
 import { UnitModel } from "../models/Unit";
 import { UnitEquivalenceModel } from "../models/UnitEquivalence";
 import { ProductModel } from "../models/Product";
+import { StorageModel } from "../models/Storage";
 
 export const loadTables = async () => {
   const shellTable = new Table({
@@ -35,13 +36,15 @@ export const loadTables = async () => {
   const unit = await UnitModel(db);
   const unitEquivalence = await UnitEquivalenceModel(db);
   const product = await ProductModel(db);
+  const storage = await StorageModel(db);
 
   shellTable.push(
     ["category", category],
     ["brand", brand],
     ["unit", unit],
     ["unit_equivalence", unitEquivalence],
-    ["product", product]
+    ["product", product],
+    ["storage", storage]
   );
 
   console.log(shellTable.toString(), "\n");

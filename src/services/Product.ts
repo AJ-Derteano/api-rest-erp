@@ -1,25 +1,62 @@
 import { db } from "../config/db";
 import { Product } from "../interfaces/Product";
+import { StorageService } from "./Storage";
 
 const tableName = "product";
 
+type ProductImage = Product & {
+  images: Array<Storage>;
+};
+
 const ProductService = {
-  find: async () => {
-    const result = await db(tableName)
+  find: async (): Promise<string | Array<Product>> => {
+    const products: Array<Product> = await db(tableName)
       .select("product.*", "brand.brand", "category.category")
       // Join product with brand
       .join("brand", { "product.idbrand": "brand.idbrand" })
       // Join product with category
       .join("category", { "product.idcategory": "category.idcategory" })
+      // Join product with files
       .where({ "product.status": "1" });
 
-    if (!result) {
+    if (!products) {
       return `NOT_FOUND`;
     }
 
-    return result;
+    return products;
   },
-  findOneById: async (id: string | number) => {
+  findProductImages: async (): Promise<string | Array<Product>> => {
+    const productImage: Array<ProductImage> = [];
+
+    const products: Array<Product> = await db(tableName)
+      .select("product.*", "brand.brand", "category.category")
+      // Join product with brand
+      .join("brand", { "product.idbrand": "brand.idbrand" })
+      // Join product with category
+      .join("category", { "product.idcategory": "category.idcategory" })
+      // Join product with files
+      .where({ "product.status": "1" });
+
+    if (!products) {
+      return `NOT_FOUND`;
+    }
+
+    for (const product of products) {
+      console.log(product);
+      const files = await StorageService.findBy(
+        product.idproduct || 0,
+        "product"
+      );
+
+      productImage.push({
+        ...product,
+        images: files,
+      });
+    }
+
+    return productImage;
+  },
+  findOneById: async (idproduct: string | number) => {
     const searchResult = await db(tableName)
       .select("product.*", "brand.brand", "category.category")
       // Join product with brand
@@ -27,12 +64,12 @@ const ProductService = {
       // Join product with category
       .join("category", { "product.idcategory": "category.idcategory" })
       .where({
-        idproduct: id,
+        idproduct,
         "product.status": "1",
       });
 
     if (!searchResult) {
-      return `NOT_FOUND [${id}]`;
+      return `NOT_FOUND [${idproduct}]`;
     }
 
     return searchResult;
@@ -53,9 +90,9 @@ const ProductService = {
     return searchResult;
   },
   create: async (product: Product) => {
-    const createBrand = await db(tableName).insert(product, "*");
+    const create = await db(tableName).insert(product, "*");
 
-    return createBrand;
+    return create;
   },
   update: async (id: string, data: Product) => {
     const product = await db(tableName).select().where({
