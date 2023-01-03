@@ -5,53 +5,53 @@ const tableName = "brand";
 
 const BrandService = {
   find: async () => {
-    const brands = await db(tableName).select().where({ status: "1" });
+    const search = await db(tableName).select().where({ status: "1" });
 
-    return brands;
+    return search;
   },
-  findOneById: async (id: string | number) => {
-    const searchBrand = await db(tableName).select().where({
-      idbrand: id,
+  findOneById: async (idbrand: string | number) => {
+    const search = await db(tableName).select().where({
+      idbrand,
       status: 1,
     });
 
-    return searchBrand;
+    return search;
   },
   findBy: async (brand: Brand) => {
-    const searchResult = await db(tableName).select().where(brand);
-    return searchResult;
+    const search = await db(tableName).select().where(brand);
+    return search;
   },
   create: async (brand: Brand) => {
-    const createBrand = await db(tableName).insert(brand, "*");
-    return createBrand;
+    const create = await db(tableName).insert(brand, "*");
+    return create;
   },
-  update: async (id: string, data: Brand) => {
+  update: async (idbrand: string, data: Brand) => {
     const brand = await db(tableName).select().where({
-      idbrand: id,
+      idbrand,
       status: "1",
     });
 
     if (!brand) {
-      return `Cannot find brand [${id}]`;
+      return `Cannot find brand [${idbrand}]`;
     }
 
     const response = await db(tableName)
-      .where({ idbrand: id })
+      .where({ idbrand })
       .update({ ...data, ...{ date_updated: db.fn.now() } });
     return response;
   },
-  softDelete: async (id: string) => {
+  softDelete: async (idbrand: string) => {
     const brand = await db(tableName).select().where({
-      idbrand: id,
+      idbrand,
       status: "1",
     });
 
     if (!brand) {
-      return `Cannot find brand [${id}]`;
+      return `Cannot find brand [${idbrand}]`;
     }
 
     const response = await db(tableName)
-      .where({ idbrand: id })
+      .where({ idbrand })
       .update({ status: "2", date_updated: db.fn.now() });
     return response;
   },
