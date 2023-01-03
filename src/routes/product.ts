@@ -6,6 +6,8 @@ const router = Router();
 
 router.get("/", ProductController.get);
 
+router.get("/image", ProductController.getWithImg);
+
 router.get("/search", ProductController.searchBy);
 
 router.get("/:id", ProductController.getById);

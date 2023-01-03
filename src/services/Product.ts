@@ -25,7 +25,7 @@ const ProductService = {
 
     return products;
   },
-  findProductImages: async (): Promise<string | Array<Product>> => {
+  findWithImages: async (): Promise<string | Array<Product>> => {
     const productImage: Array<ProductImage> = [];
 
     const products: Array<Product> = await db(tableName)
@@ -42,7 +42,7 @@ const ProductService = {
     }
 
     for (const product of products) {
-      console.log(product);
+
       const files = await StorageService.findBy(
         product.idproduct || 0,
         "product"

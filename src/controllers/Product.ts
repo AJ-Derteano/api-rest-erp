@@ -14,6 +14,15 @@ const ProductController = {
       handleHttpError(res, `ERROR_GET`, 500, err);
     }
   },
+  getWithImg: async (_req: Request, res: Response) => {
+    try {
+      const response = await ProductService.findWithImages();
+
+      handleHttpResponse(res, response);
+    } catch (err) {
+      handleHttpError(res, `ERROR_GET_PRODUCT_IMAGES`, 500, err);
+    }
+  },
   getById: async ({ params }: Request, res: Response) => {
     const { id } = params;
 
